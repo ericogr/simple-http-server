@@ -18,3 +18,14 @@ Return:
 ```sh
 {"id":961776}
 ```
+And WS log:
+
+```sh
+Date time: Sun Feb 18 2018 09:29:18 GMT-0300 (-03)
+Method: POST
+URL: /test/123/xpto
+Receive Body: {
+  "{\"test\": 123}": ""
+}
+Send body: {"id":961776}
+```
