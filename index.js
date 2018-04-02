@@ -12,7 +12,9 @@ function genericResponse(request, response) {
   console.log(`Method: ${request.method}`)
   console.log(`URL: ${request.url}`)
   console.log('Headers:')
-  console.log(JSON.stringify(request.headers))
+  Object.keys(request.headers).forEach((hName) => {
+    console.log(` - ${hName}: ${request.headers[hName]}`)
+  })
   console.log(`Receive Body: ${JSON.stringify(request.body, null, 2)}`)
 
   let retorno = {
