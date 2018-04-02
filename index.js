@@ -11,6 +11,8 @@ function genericResponse(request, response) {
   console.log(`Date time: ${new Date().toString()}`)
   console.log(`Method: ${request.method}`)
   console.log(`URL: ${request.url}`)
+  console.log('Headers:')
+  console.log(JSON.stringify(request.headers))
   console.log(`Receive Body: ${JSON.stringify(request.body, null, 2)}`)
 
   let retorno = {
