@@ -3,6 +3,7 @@ const bodyParser = require('body-parser')
 
 const app = express()
 const port = process.argv[2] ? process.argv[2] : 8080
+const timeout = process.argv[3] ? process.argv[3] : 0
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -23,7 +24,9 @@ function genericResponse(request, response) {
 
   console.log(`Send body: ${JSON.stringify(retorno)}\n`)
 
-  response.send(retorno)
+  setTimeout(() => {
+    response.send(retorno)
+  }, timeout)
 }
 
 app.get('/*', genericResponse);
@@ -36,5 +39,8 @@ app.listen(port, (err) => {
     return console.log('something bad happened', err)
   }
 
-  console.log(`server is listening on ${port}\n`)
+  console.log(
+    `server up
+      - listening on ${port}
+      - timeout ${timeout}\n`)
 })
