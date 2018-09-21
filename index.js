@@ -7,6 +7,8 @@ const timeout = process.argv[3] ? process.argv[3] : 0
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use(bodyParser.raw())
+app.use(bodyParser.text())
 
 function genericResponse(request, response) {
   console.log(`Date time: ${new Date().toString()}`)
@@ -25,6 +27,7 @@ function genericResponse(request, response) {
   console.log(`Send body: ${JSON.stringify(retorno)}\n`)
 
   setTimeout(() => {
+    //response.status(429);
     response.send(retorno)
   }, timeout)
 }
