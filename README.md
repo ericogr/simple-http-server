@@ -29,3 +29,9 @@ Receive Body: {
 }
 Send body: {"id":961776}
 ```
+
+Upload files:
+
+```sh
+curl -v -F 'file1=@/tmp/file.bin' -F 'file2=@/tmp/file.bin' http://localhost:8080/test
+```
