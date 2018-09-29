@@ -30,15 +30,18 @@ function genericResponse(request, response) {
             console.log(`Receiving uploaded data from file ${filename}`)
 
             file.on('data', function(data) {
+                console.log(`upload data from file ${filename}:`);
                 console.log(data.toString());
             })
 
             file.on('end', function() {
-                console.log('upload finished')
-                console.log(`Send body back: ${JSON.stringify(retorno)}\n`)
-                response.send(retorno)
-                console.log('================================================================================')
+                console.log(`upload ${filename} finished`)
             })
+        })
+        request.busboy.on('finish', function() {
+            console.log(`Send body back: ${JSON.stringify(retorno)}\n`)
+            response.send(retorno)
+            console.log('================================================================================')
         })
         request.pipe(request.busboy);
     }
