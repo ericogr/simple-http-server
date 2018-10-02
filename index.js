@@ -1,3 +1,6 @@
+const fs = require('fs')
+const path = require('path')
+
 const express = require('express')
 const bodyParser = require('body-parser')
 const busboy = require('connect-busboy')
@@ -29,10 +32,8 @@ function genericResponse(request, response) {
         request.busboy.on('file', (fieldname, file, filename, encoding, mimetype) => {
             console.log(`Receiving uploaded data from file ${filename}`)
 
-            file.on('data', function(data) {
-                console.log(`upload data from file ${filename}:`);
-                console.log(data.toString());
-            })
+            const saveTo = path.join('.', filename);
+            file.pipe(fs.createWriteStream(saveTo));
 
             file.on('end', function() {
                 console.log(`upload ${filename} finished`)
