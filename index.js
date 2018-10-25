@@ -41,19 +41,28 @@ function genericResponse(request, response) {
         })
         request.busboy.on('finish', function() {
             console.log(`Send body back: ${JSON.stringify(retorno)}\n`)
-            response.send(retorno)
-            console.log('================================================================================')
+            responseToClient(response, retorno, timeout);
         })
         request.pipe(request.busboy);
     }
     else {
         console.log(`Receive Body: ${JSON.stringify(request.body, null, 2)}`)
-        setTimeout(() => {
-            console.log(`Send body: ${JSON.stringify(retorno)}\n`)
-            response.send(retorno)
-            console.log('================================================================================')
-        }, timeout)
+        console.log(`Send body: ${JSON.stringify(retorno)}\n`)
+        responseToClient(response, retorno, timeout);
     }
+}
+
+function responseToClient(response, retorno, timeout) {
+    if (timeout > 0) {
+        console.log(`=> waiting ${timeout} before send message`)
+
+    }
+
+    setTimeout(() => {
+        response.send(retorno)
+        console.log('=> message sent')
+        console.log('================================================================================')
+    }, timeout)
 }
 
 app.get('/*', genericResponse);
