@@ -5,9 +5,16 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const busboy = require('connect-busboy')
 
+//openssl req -nodes -new -x509 -keyout server.key -out server.cert
+const https = require('https')
 const app = express()
 const port = process.argv[2] ? process.argv[2] : 8080
 const timeout = process.argv[3] ? process.argv[3] : 0
+
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app).listen(8080)
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
@@ -70,7 +77,8 @@ app.put('/*', genericResponse);
 app.post('/*', genericResponse);
 app.delete('/*', genericResponse);
 
-app.listen(port, (err) => {
+
+app.listen((err) => {
     if (err) {
         return console.log('something bad happened', err)
     }
